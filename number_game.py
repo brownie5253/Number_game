@@ -269,7 +269,7 @@ def op_address_list(T, prefix = None):
     
     if prefix is None:
         prefix = []
-        
+
     L = [prefix.copy()+[0]] # first adddress is the op of the root of T
     left_al = op_address_list(T[1], prefix.copy()+[1])
     L.extend(left_al)
@@ -324,12 +324,36 @@ def decompose(T, prefix = None):
         Anum = [prefix]
         Lnum = [T]
         return Aop, Lop, Anum, Lnum
-    
-    assert isinstance(T, list)
+    #########Connor's code##################
+    else:
+        Aop = [prefix.copy() + [0]]  # first adddress is the op of the root of T
+        Lop = [T[0]]
+        Anum = []
+        Lnum = []
 
+        #left side
+        left_aop, left_lop, left_anum, left_lnum = decompose(T[1], prefix.copy() + [1])
+        Aop.extend(left_aop)
+        Lop.extend(left_lop)
+        Anum.extend(left_anum)
+        # if left_anum != []:
+        #     Anum.append(prefix.copy() + left_anum)
+        Lnum.extend(left_lnum)
 
-    
-    raise NotImplementedError()
+        #right side
+        right_aop, right_lop, right_anum, right_lnum = decompose(T[2], prefix.copy() + [2])
+        Aop.extend(right_aop)
+        Lop.extend(right_lop)
+        Anum.extend(right_anum)
+        # if right_anum != []:
+        #     Anum.append(prefix.copy() + right_anum)
+        Lnum.extend(right_lnum)
+
+        return Aop, Lop, Anum, Lnum
+
+    #
+    # assert isinstance(T, list)
+    # raise NotImplementedError()
 
 
 # ----------------------------------------------------------------------------
