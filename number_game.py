@@ -66,8 +66,7 @@ def my_team():
     of triplet of the form (student_number, first_name, last_name)
     
     '''
-#    return [ (1234567, 'Ada', 'Lovelace'), (1234568, 'Grace', 'Hopper'), (1234569, 'Eva', 'Tardos') ]
-    raise NotImplementedError()
+    return [(10467858, 'Ethan', 'Griffiths'), (10467874, 'Mattias', 'Winsen'), (10486925, 'Connor', 'Browne')]
 
 
 # ----------------------------------------------------------------------------
@@ -327,6 +326,8 @@ def decompose(T, prefix = None):
         return Aop, Lop, Anum, Lnum
     
     assert isinstance(T, list)
+
+
     
     raise NotImplementedError()
 
@@ -425,13 +426,18 @@ def mutate_op(T):
     '''
     if isinstance(T, int):
         return T
-    
+
+    op_list = ["*","+","-"]
     La = op_address_list(T)
     a = random.choice(La)  # random address of an op in T
     op_c = get_item(T, a)       # the char of the op
-    # mutant_c : a different op
-
-    raise NotImplementedError()
+    # mutant_c : a different op #########Connor's Code###############
+    new_op = op_c[0]
+    while (new_op == op_c[0]):
+        new_op = random.choice(op_list)
+    op_c[0] = new_op
+    T_mutate = replace_subtree(T, a, op_c)
+    return T_mutate
     
 
 # ----------------------------------------------------------------------------
