@@ -336,8 +336,6 @@ def decompose(T, prefix = None):
         Aop.extend(left_aop)
         Lop.extend(left_lop)
         Anum.extend(left_anum)
-        # if left_anum != []:
-        #     Anum.append(prefix.copy() + left_anum)
         Lnum.extend(left_lnum)
 
         #right side
@@ -345,8 +343,6 @@ def decompose(T, prefix = None):
         Aop.extend(right_aop)
         Lop.extend(right_lop)
         Anum.extend(right_anum)
-        # if right_anum != []:
-        #     Anum.append(prefix.copy() + right_anum)
         Lnum.extend(right_lnum)
 
         return Aop, Lop, Anum, Lnum
@@ -426,11 +422,22 @@ def mutate_num(T, Q):
     
     Aop, Lop, Anum, Lnum = decompose(T)    
     mutant_T = copy.deepcopy(T)
-        
-    counter_Q = collections.Counter(Q) # some small numbers can be repeated
 
-    raise NotImplementedError()
-    
+    #####get a list of numbers not yet in T#######
+    avalibleNum = []
+    counter_Q = collections.Counter(Q) # some small numbers can be repeated
+    in_counter = collections.Counter(Lnum)
+    for number in Lnum:
+        diff = counter_Q[number] - in_counter[number]
+        if diff > 0:
+            for num in range(1,diff+1):
+                avalibleNum.append(num)
+
+    #####pick random new num from avalible and insert it
+    a = random.choice(Anum)  # random address of an op in T
+    new_num = random.choice(avalibleNum)
+    T_mutate = replace_subtree(T, a, new_num)
+    return T_mutate
 
 # ----------------------------------------------------------------------------
 
@@ -452,7 +459,8 @@ def mutate_op(T):
         return T
 
     op_list = ["*","+","-"]
-    La = op_address_list(T)
+    mutant_T = copy.deepcopy(T)
+    La = op_address_list(mutant_T)
     a = random.choice(La)  # random address of an op in T
     op_c = get_item(T, a)       # the char of the op
     # mutant_c : a different op #########Connor's Code###############
