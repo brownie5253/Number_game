@@ -230,7 +230,7 @@ def polish_str_2_expr_tree(pn_str):
     '''
     if pn_str.isnumeric():
         return int(pn_str)
-    
+
     def find_match(i):
         '''
         Starting at position i where pn_str[i] == '['
@@ -240,15 +240,15 @@ def polish_str_2_expr_tree(pn_str):
         '''
         ######Connor's Code######
         j = i+1
-        open = 0;
+        open = 0
         if (pn_str[i] == '['):
             for j in range(i+1, len(pn_str)):
                 if (pn_str[j] == ']' and open == 0):
                     return j
                 elif (pn_str[j] == '['):
-                    open+1
+                    open = open+1
                 elif (pn_str[j] == ']'):
-                    open-1
+                    open = open-1
 
      # .................................................................  
 
@@ -259,16 +259,36 @@ def polish_str_2_expr_tree(pn_str):
     operator = pn_str[left_p+1]
     tree.append(operator)
 
+    #if there is still another lower branch
     if (left_p != -1):
-        right_p = find_match(left_p)
-        if (pn_str[left_p + 2].isnumeric()):
 
-            # l_branch = polish_str_2_expr_tree(pn_str[])
-            pn_str[left_p + 2] == '['
+        right_p = find_match(left_p)
+        pn_str = pn_str[left_p + 1:right_p]
+
+        #if the left side is a single num
+        num = pn_str.find(',')+1
+        if (pn_str[num].isnumeric()):
+            tree.append(int(pn_str[num]))
+            pn_str = pn_str[num:]
+        else:
+            new_left_p = pn_str.find('[')
+            new_right_p = find_match(new_left_p)
+            tree.append(polish_str_2_expr_tree(pn_str[new_left_p:new_right_p+1]))
+            pn_str = pn_str[new_right_p:]
+
+        # if the right side is a single num
+        num = pn_str.find(',') + 1
+        if (pn_str[num].isnumeric()):
+            tree.append(int(pn_str[num]))
+        else:
+            new_left_p = pn_str.find('[')
+            new_right_p = find_match(new_left_p)
+            tree.append(polish_str_2_expr_tree(pn_str[new_left_p:new_right_p+1]))
 
     else:
-        tree.append(pn_str[-2])
-        tree.append(pn_str[-1])
+        pn_str_arr = pn_str.split(',')
+        tree.append(int(pn_str_arr[-2]))
+        tree.append(int(pn_str_arr[-1]))
 
     return tree
 

@@ -47,7 +47,7 @@ import numpy as np
 
 from number_game import pick_numbers, eval_tree, display_tree
 
-from genetic_algorithm import  evolve_pop
+from genetic_algorithm import evolve_pop
 
 
 Q = pick_numbers()
@@ -83,4 +83,5 @@ if v==0:
     print("\n***** Perfect Score!! *****")
 print(f'\ntarget {target} , tree value {eval_tree(T)}\n')
 display_tree(T)
+
 
