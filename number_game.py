@@ -228,7 +228,8 @@ def polish_str_2_expr_tree(pn_str):
     T
 
     '''
-    # raise NotImplementedError()
+    if pn_str.isnumeric():
+        return int(pn_str)
     
     def find_match(i):
         '''
@@ -237,12 +238,41 @@ def polish_str_2_expr_tree(pn_str):
         That is, pn_str[j] == ']' and the substring pn_str[i:j+1]
         is balanced
         '''
-        raise NotImplementedError()
+        ######Connor's Code######
+        j = i+1
+        open = 0;
+        if (pn_str[i] == '['):
+            for j in range(i+1, len(pn_str)):
+                if (pn_str[j] == ']' and open == 0):
+                    return j
+                elif (pn_str[j] == '['):
+                    open+1
+                elif (pn_str[j] == ']'):
+                    open-1
+
      # .................................................................  
 
+    # pn_str = pn_str.replace(',','')
+
+    tree = []
     left_p = pn_str.find('[')
- 
-    raise NotImplementedError()
+    operator = pn_str[left_p+1]
+    tree.append(operator)
+
+    if (left_p != -1):
+        right_p = find_match(left_p)
+        if (pn_str[left_p + 2].isnumeric()):
+
+            # l_branch = polish_str_2_expr_tree(pn_str[])
+            pn_str[left_p + 2] == '['
+
+    else:
+        tree.append(pn_str[-2])
+        tree.append(pn_str[-1])
+
+    return tree
+
+
  
    
 # ----------------------------------------------------------------------------
@@ -420,8 +450,7 @@ def mutate_num(T, Q):
 
     '''
     
-    Aop, Lop, Anum, Lnum = decompose(T)    
-    #mutant_T = copy.deepcopy(T)
+    Aop, Lop, Anum, Lnum = decompose(T)
 
     #get a list of Q numbers not yet in T
     avalibleNum = []
@@ -434,10 +463,12 @@ def mutate_num(T, Q):
             for num in range(1,diff+1):
                 avalibleNum.append(num)
 
+    T_mutate = T
     #pick random new num from avalible and insert it
-    address = random.choice(Anum)  # random address of an number in T
-    new_num = random.choice(avalibleNum)
-    T_mutate = replace_subtree(T, address, new_num)
+    if (len(avalibleNum) > 0):
+        address = random.choice(Anum)  # random address of an number in T
+        new_num = random.choice(avalibleNum)
+        T_mutate = replace_subtree(T, address, new_num)
     return T_mutate
 
 # ----------------------------------------------------------------------------
@@ -468,8 +499,7 @@ def mutate_op(T):
     new_op = op_c[0]
     while (new_op == op_c[0]):
         new_op = random.choice(op_list)
-    op_c[0] = new_op
-    T_mutate = replace_subtree(T, a, op_c)
+    T_mutate = replace_subtree(mutant_T, a, new_op)
     return T_mutate
     
 
