@@ -669,16 +669,16 @@ def Find_max_iteration():
     pop_sizes = range(25,501,25) #25 -> 500 with 20 steps of size 25
 
     ##compute max iteration possible for each pop size using multiproccessing pool, takes ~1min
-    # try:
-    #     pool = multiprocessing.Pool()  # on 8 processors
-    #     max_iterations_possible = pool.map(run_that_shit, pop_sizes)
-    #     pool.close()
-    #     pool.join()
-    # finally:  # To make sure processes are closed in the end, even if errors happen
-    #     pool.close()
-    #     pool.join()
+    try:
+        pool = multiprocessing.Pool()  # on 8 processors
+        max_iterations_possible = pool.map(run_that_shit, pop_sizes)
+        pool.close()
+        pool.join()
+    finally:  # To make sure processes are closed in the end, even if errors happen
+        pool.close()
+        pool.join()
 
-    max_iterations_possible = [260, 150, 55, 35, 55, 25, 25, 35, 13, 12, 9, 8, 5, 4, 4, 4, 3, 3, 3, 3]
+    # max_iterations_possible = [260, 150, 55, 35, 55, 25, 25, 35, 13, 12, 9, 8, 5, 4, 4, 4, 3, 3, 3, 3]
 
     return pop_sizes, max_iterations_possible
 
@@ -717,18 +717,18 @@ def test_performance(iterator, pop_sizes):
     #     target.append(np.random.randint(1, 1000))
 
 
-    performance = [15.933333333333334, 3.1666666666666665, 2.566666666666667, 2.2, 1.9, 2.066666666666667,
-                   1.1333333333333333, 1.9333333333333333, 1.1666666666666667, 1.4666666666666666, 0.9333333333333333,
-                   1.2, 1.6, 2.6333333333333333, 2.3666666666666667, 1.9, 1.3333333333333333, 2.2, 2.6666666666666665, 2.3]
+    # performance = [15.933333333333334, 3.1666666666666665, 2.566666666666667, 2.2, 1.9, 2.066666666666667,
+    #                1.1333333333333333, 1.9333333333333333, 1.1666666666666667, 1.4666666666666666, 0.9333333333333333,
+    #                1.2, 1.6, 2.6333333333333333, 2.3666666666666667, 1.9, 1.3333333333333333, 2.2, 2.6666666666666665, 2.3]
     # uncomment to do manually again
-    # try:
-    #     pool = multiprocessing.Pool()  # on 8 processors
-    #     performance = pool.map(run_that_shit2, pop_sizes)
-    #     pool.close()
-    #     pool.join()
-    # finally:  # To make sure processes are closed in the end, even if errors happen
-    #     pool.close()
-    #     pool.join()
+    try:
+        pool = multiprocessing.Pool()  # on 8 processors
+        performance = pool.map(run_that_shit2, pop_sizes)
+        pool.close()
+        pool.join()
+    finally:  # To make sure processes are closed in the end, even if errors happen
+        pool.close()
+        pool.join()
 
     return performance
 
