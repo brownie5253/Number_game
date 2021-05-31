@@ -425,6 +425,7 @@ def mutate_num(T, Q):
 
     #####get a list of numbers not yet in T#######
     avalibleNum = []
+
     counter_Q = collections.Counter(Q) # some small numbers can be repeated
     in_counter = collections.Counter(Lnum)
     for number in Lnum:
@@ -432,6 +433,11 @@ def mutate_num(T, Q):
         if diff > 0:
             for num in range(1,diff+1):
                 avalibleNum.append(num)
+
+
+    # counter_Q = collections.Counter(Q)  # some small numbers can be repeated
+    # counter_1 = collections.Counter(Lnum)
+    # if all(counter_Q[v] >= counter_1[v] for v in counter_Q):
 
     #####pick random new num from avalible and insert it
     a = random.choice(Anum)  # random address of an op in T
@@ -549,6 +555,7 @@ def cross_over(P1, P2, Q):
     nums_C1mS1 = Lnum_1[:a1]+Lnum_1[b1:]
     # numbers is C2-S2
     nums_C2mS2 = Lnum_2[:a2]+Lnum_2[b2:]
+    #nums_S2 = Lnum_2[a2:b2]
     
     # S2 is a fine replacement of S1 in C1
     # if nums_S2 + nums_C1mS1 is contained in Q
@@ -560,8 +567,11 @@ def cross_over(P1, P2, Q):
     aS1 = Aop_1[i1][:d1] # address of the subtree S1 
     S1 = get_item(C1, aS1)
 
-    # ABOUT 3 LINES DELETED
-    raise NotImplementedError()
+    # ABOUT 3 LINES DELETED #######connor's code
+    d2 = len(Aop_2[i2]) - 1
+    aS2 = Aop_2[i2][:d2]  # address of the subtree S1
+    S2 = get_item(C2, aS2)
+    ##############
 
     # print(' DEBUG -------- S1 and S2 ----------') # DEBUG
     # print(S1)
@@ -587,9 +597,18 @@ def cross_over(P1, P2, Q):
     counter_2 = collections.Counter(Lnum_1[a1:b1]+nums_C2mS2)
     
     # Test whether child C2 is ok
-    
-    # ABOUT 10 LINES DELETED
-    raise NotImplementedError()
+    # ########Connor's Code############
+    if all(counter_Q[v] >= counter_2[v] for v in counter_Q):
+        # candidate is fine!  :-)
+        C2 = replace_subtree(C2, aS2, S1)
+    else:
+        available_nums = counter_Q.copy()
+        available_nums.subtract(
+            collections.Counter(nums_C2mS2)
+        )
+        R2, _ = bottom_up_creator(list(available_nums.elements()))
+        C2 = replace_subtree(C2, aS2, R2)
+    ###############
     
     
     return C1, C2
