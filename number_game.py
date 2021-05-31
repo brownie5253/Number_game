@@ -421,28 +421,23 @@ def mutate_num(T, Q):
     '''
     
     Aop, Lop, Anum, Lnum = decompose(T)    
-    mutant_T = copy.deepcopy(T)
+    #mutant_T = copy.deepcopy(T)
 
-    #####get a list of numbers not yet in T#######
+    #get a list of Q numbers not yet in T
     avalibleNum = []
-
     counter_Q = collections.Counter(Q) # some small numbers can be repeated
     in_counter = collections.Counter(Lnum)
+
     for number in Lnum:
         diff = counter_Q[number] - in_counter[number]
         if diff > 0:
             for num in range(1,diff+1):
                 avalibleNum.append(num)
 
-
-    # counter_Q = collections.Counter(Q)  # some small numbers can be repeated
-    # counter_1 = collections.Counter(Lnum)
-    # if all(counter_Q[v] >= counter_1[v] for v in counter_Q):
-
-    #####pick random new num from avalible and insert it
-    a = random.choice(Anum)  # random address of an op in T
+    #pick random new num from avalible and insert it
+    address = random.choice(Anum)  # random address of an number in T
     new_num = random.choice(avalibleNum)
-    T_mutate = replace_subtree(T, a, new_num)
+    T_mutate = replace_subtree(T, address, new_num)
     return T_mutate
 
 # ----------------------------------------------------------------------------
