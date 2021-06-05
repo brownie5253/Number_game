@@ -693,7 +693,6 @@ def run_that_shit(size):
             iterator += 1
         else:
             iterator += 5
-        timer = 0
         time1 = time.perf_counter()
         from genetic_algorithm import evolve_pop
         v, T = evolve_pop(Q, target,
