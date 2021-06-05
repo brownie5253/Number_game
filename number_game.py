@@ -671,7 +671,7 @@ def Find_max_iteration():
     ##compute max iteration possible for each pop size using multiproccessing pool, takes ~1min
     try:
         pool = multiprocessing.Pool()  # on 8 processors
-        max_iterations_possible = pool.map(run_that_shit, pop_sizes)
+        max_iterations_possible = pool.map(run_func_1, pop_sizes)
         pool.close()
         pool.join()
     finally:  # To make sure processes are closed in the end, even if errors happen
@@ -683,7 +683,7 @@ def Find_max_iteration():
     return pop_sizes, max_iterations_possible
 
 
-def run_that_shit(size):
+def run_func_1(size):
     Q = [100, 25, 7, 5, 3, 1]
     target = 7280  # unachivable with Q given, will run to max iterations
     best_iteration_size = 0
@@ -723,7 +723,7 @@ def test_performance(iterator, pop_sizes):
     # uncomment to do manually again
     try:
         pool = multiprocessing.Pool()  # on 8 processors
-        performance = pool.map(run_that_shit2, pop_sizes)
+        performance = pool.map(run_func_2, pop_sizes)
         pool.close()
         pool.join()
     finally:  # To make sure processes are closed in the end, even if errors happen
@@ -732,7 +732,7 @@ def test_performance(iterator, pop_sizes):
 
     return performance
 
-def run_that_shit2(size):
+def run_func_2(size):
     max_iterations_possible = [260, 150, 55, 35, 55, 25, 25, 35, 13, 12, 9, 8, 5, 4, 4, 4, 3, 3, 3, 3]
     iterator = max_iterations_possible[int((size/25)-1)]
 
