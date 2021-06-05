@@ -762,4 +762,7 @@ def run_that_shit2(size):
 if __name__ == '__main__':
     pop_sizes, max_iterations_possible = Find_max_iteration()
     performance = test_performance(max_iterations_possible, pop_sizes)
+    print('Pop_sizes: ', pop_sizes)
+    print('Max_Iterations_Possible: ', max_iterations_possible)
+    print('Performance: ', performance)
     a=1
