@@ -660,102 +660,6 @@ def cross_over(P1, P2, Q):
     
     return C1, C2
 
-# #------------------------------------------------------
-# #Experiment functions (ver 1)
-# def Test_System():
-#     a=1
-
-# def Find_max_iteration():
-#     pop_sizes = range(25,501,25) #25 -> 500 with 20 steps of size 25
-
-#     ##compute max iteration possible for each pop size using multiproccessing pool, takes ~1min
-#     try:
-#         pool = multiprocessing.Pool()  # on 8 processors
-#         max_iterations_possible = pool.map(run_func_1, pop_sizes)
-#         pool.close()
-#         pool.join()
-#     finally:  # To make sure processes are closed in the end, even if errors happen
-#         pool.close()
-#         pool.join()
-
-#     # max_iterations_possible = [260, 150, 55, 35, 55, 25, 25, 35, 13, 12, 9, 8, 5, 4, 4, 4, 3, 3, 3, 3]
-
-#     return pop_sizes, max_iterations_possible
-
-
-# def run_func_1(size):
-#     Q = [100, 25, 7, 5, 3, 1]
-#     target = 7280  # unachivable with Q given, will run to max iterations
-#     best_iteration_size = 0
-#     iterator = 0
-#     while (True):
-#         if (iterator < 20):
-#             iterator += 1
-#         else:
-#             iterator += 5
-#         time1 = time.perf_counter()
-#         from genetic_algorithm import evolve_pop
-#         v, T = evolve_pop(Q, target,
-#                           max_num_iteration=iterator,
-#                           population_size=size)
-#         time2 = time.perf_counter()
-#         timeToRun = time2 - time1
-#         if (timeToRun <= 2):
-#             best_iteration_size = iterator
-#         elif(iterator > 200):
-#             break
-#         else:
-#             break
-#     return best_iteration_size
-
-# def test_performance(iterator, pop_sizes):
-#     # Q = []
-#     # target = []
-#     # for i in range(1,31):
-#     #     Q.append(pick_numbers())
-#     #     target.append(np.random.randint(1, 1000))
-
-
-#     # performance = [15.933333333333334, 3.1666666666666665, 2.566666666666667, 2.2, 1.9, 2.066666666666667,
-#     #                1.1333333333333333, 1.9333333333333333, 1.1666666666666667, 1.4666666666666666, 0.9333333333333333,
-#     #                1.2, 1.6, 2.6333333333333333, 2.3666666666666667, 1.9, 1.3333333333333333, 2.2, 2.6666666666666665, 2.3]
-#     # uncomment to do manually again
-#     try:
-#         pool = multiprocessing.Pool()  # on 8 processors
-#         performance = pool.map(run_func_2, pop_sizes)
-#         pool.close()
-#         pool.join()
-#     finally:  # To make sure processes are closed in the end, even if errors happen
-#         pool.close()
-#         pool.join()
-
-#     return performance
-
-# def run_func_2(size):
-#     max_iterations_possible = [260, 150, 55, 35, 55, 25, 25, 35, 13, 12, 9, 8, 5, 4, 4, 4, 3, 3, 3, 3]
-#     iterator = max_iterations_possible[int((size/25)-1)]
-
-#     Q = [[9, 1, 8, 25, 75, 4], [100, 4, 75, 50, 5, 1], [1, 50, 9, 2, 10, 1], [8, 7, 7, 100, 6, 3], [75, 5, 6, 9, 7, 4],
-#          [9, 9, 6, 100, 8, 75], [2, 75, 1, 3, 10, 8], [5, 1, 8, 7, 25, 6], [75, 7, 50, 8, 1, 4], [3, 50, 2, 75, 4, 7],
-#          [50, 10, 8, 6, 2, 75], [2, 7, 3, 5, 6, 9], [3, 2, 5, 7, 6, 3], [3, 2, 75, 8, 7, 1], [25, 7, 5, 75, 6, 9],
-#          [6, 3, 50, 7, 3, 25], [100, 1, 50, 25, 5, 2], [2, 4, 8, 3, 4, 2], [75, 25, 4, 9, 5, 6],
-#          [100, 2, 25, 75, 50, 6], [50, 75, 25, 3, 5, 9], [50, 25, 3, 9, 3, 1], [50, 10, 10, 8, 8, 5],
-#          [10, 5, 10, 8, 7, 25], [100, 25, 9, 8, 1, 8], [1, 25, 50, 9, 9, 3], [10, 1, 100, 8, 3, 7],
-#          [6, 25, 5, 9, 4, 100], [50, 6, 3, 75, 2, 100], [9, 100, 8, 10, 10, 1]]
-
-#     target = [969, 126, 58, 398, 626, 688, 517, 95, 934, 125, 556, 669, 211, 424, 446, 720, 63, 806, 206, 75, 553, 485,
-#               904, 926, 155, 299, 736, 751, 1, 334]
-#     perfomance = 0
-#     for i in range(0,30):
-#         from genetic_algorithm import evolve_pop
-#         v, T = evolve_pop(Q[i], target[i],
-#                           max_num_iteration=iterator,
-#                           population_size=size)
-#         perfomance += v
-#     return perfomance/30
-
-
-
 #------------------------------------------------------------------------------------------------------
 #Experiment functions (ver 2)
 
@@ -817,8 +721,6 @@ def find_max_iterations(pop_sizes): # 11000 is max pop size for Ethan's pc
     # # Compute without multiprocessing
     # max_iterations_possible = list(map(max_iteration, pop_sizes))
 
-    # max_iterations_possible = [260, 150, 55, 35, 55, 25, 25, 35, 13, 12, 9, 8, 5, 4, 4, 4, 3, 3, 3, 3]
-
     return max_iterations_possible
 
 def max_iteration(size):
@@ -841,12 +743,10 @@ def max_iteration(size):
         if (timeToRun <= 2):
             best_iteration_size = prev_iterations
             prev_iterations = iterations
-        # elif(iterations > 200):
-        #     break
         else:
             break        
 
-        # Increase max iterations and run again 
+        # Increase max iterations and run again (shortened version)
         if (iterations < 30):
             iterations += 1
         elif(iterations < 100):
@@ -902,5 +802,6 @@ def run_func_2(pop_size, max_iteration_possible):
 
 if __name__ == '__main__':
     # UNCOMMENT THE FOLLOWING LINE TO RUN TESTS
-    test_system()
+    # test_system()
+    pass
 
